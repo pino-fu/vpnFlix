@@ -8,7 +8,7 @@ button,
 input,
 select,
 textarea {
-  color: #404040;
+  color: #eeeeee;
   font-family: "Comfortaa", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
@@ -31,3 +31,10 @@ p {
   margin-block-end: 0;
 }
 
+html {
+  background-color: #151515;
+}
+
+button {
+  background-color: black;
+}
