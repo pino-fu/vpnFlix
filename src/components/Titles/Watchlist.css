@@ -1,0 +1,40 @@
+.watchlistContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.watchListRow {
+    margin-top: 50px;
+}
+
+.titleImage {
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgb(69, 28, 121), -2px -2px 5px rgb(69, 28, 121);
+    margin: 8px 0px;
+}
+
+.titleImage:hover {
+    transform: scale(1.1);
+    transition: .3s ease-in-out
+}
+
+.editPanel {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    margin-top: -5px
+}
+
+.deleteButton {
+    margin-left: 18px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
+    margin-top: 10px; 
+}
+
+.editButton {
+    margin-left: 18px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
+    margin-top: 10px; 
+}

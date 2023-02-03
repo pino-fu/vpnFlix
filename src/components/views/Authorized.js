@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom"
 export const Authorized = ({ children }) => {
     const location = useLocation()
 
-    if (localStorage.getItem("honey_user")) {
+    if (localStorage.getItem("vpNetflix_user")) {
         return children
     }
     else {
@@ -13,4 +13,3 @@ export const Authorized = ({ children }) => {
             state={{ location }} />
     }
 }
-

@@ -1,0 +1,25 @@
+.titleCardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+.titleImage {
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgb(69, 28, 121), -2px -2px 5px rgb(69, 28, 121);
+    margin: 8px 0px;
+}
+
+.titleImage:hover {
+    transform: scale(1.1);
+    transition: .3s ease-in-out
+}
+
+#titleType {
+    background-color: black;
+}
+
+.option {
+    padding: 3px 2px;
+}
