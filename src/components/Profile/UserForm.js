@@ -8,8 +8,6 @@ export const UserForm = () => {
 
     const navigate = useNavigate()
 
-    //const [showForm, setShowForm] = useState(false)
-
     const [user, setUser] = useState({
         name: "",
         userName: "",
