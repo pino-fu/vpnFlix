@@ -83,13 +83,7 @@ export const Watchlist = () => {
                                                     })
                                             }}>Delete</button>
                                         <button className="editButton"
-                                            onClick={() => {
-                                                showForm
-                                                    ?
-                                                    setShowForm(false)
-                                                    :
-                                                    setShowForm(true)
-                                            }}
+                                            onClick={() => navigate(`../edit/${title.netflix_id}`)}
                                         >Edit</button>
                                     </div>
                                     <div className="editPanel">
@@ -151,12 +145,7 @@ export const Watchlist = () => {
                                                     })
                                             }}>Delete</button>
                                         <button className="editButton"
-                                            onClick={() => showForm
-                                                ?
-                                                setShowForm(false)
-                                                :
-                                                setShowForm(true)
-                                            }
+                                            onClick={() => navigate(`../edit/${title.netflix_id}`)}
                                         >Edit</button>
                                     </div>
                                     <div className="editPanel">

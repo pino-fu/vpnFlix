@@ -24,7 +24,10 @@ export const Register = (props) => {
                 if (createdUser.hasOwnProperty("id")) {
                     localStorage.setItem("vpNetflix_user", JSON.stringify({
                         id: createdUser.id,
-                        staff: createdUser.isStaff
+                        staff: createdUser.isStaff,
+                        email: createdUser.email,
+                        name: createdUser.name,
+                        userName: createdUser.userName
                     }))
                     navigate("/")
                 }

@@ -8,7 +8,7 @@ export const TitleList = () => {
 
     const navigate = useNavigate()
     
-    const queryLimit = 10
+    const queryLimit = 100
 
     const myHeaders = new Headers();
     myHeaders.append("X-RapidAPI-Key", "692a3bc309msh31d29e11c582aa5p1aa1c6jsn45689d696937");
