@@ -131,6 +131,10 @@ export const TitleDetails = () => {
                     <section className="detailsSynopsis">
                         {parser.parseFromString('<!doctype html><body>' + title.synopsis, 'text/html').body.textContent }
                     </section>
+                    <button className="netflixButton"
+                                                onClick={() => {
+                                                    window.open(`https://www.netflix.com/title/${title.netflix_id}`)
+                                                } }>View on Netflix</button>
                     {
                         showButton
                             ?
