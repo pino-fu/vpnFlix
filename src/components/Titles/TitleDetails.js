@@ -13,9 +13,11 @@ export const TitleDetails = () => {
     const [title, setTitle] = useState({})
     const [countries, setCountries] = useState([])
     const [watchlistTypes, setWatchlistTypes] = useState([])
+    const [watchlistTitles, setWatchlistTitles] = useState([])
     const [favorite, setFavorite] = useState({
         watchlistId: 0
     })
+    const [showButton, setShowButton] = useState(true)
     const [showSaveForm, setShowSaveForm] = useState(false)
 
     const myHeaders = new Headers();
@@ -27,6 +29,8 @@ export const TitleDetails = () => {
         headers: myHeaders,
         redirect: 'follow'
     }
+
+    const parser = new DOMParser();
 
     useEffect(
         () => {
@@ -57,6 +61,24 @@ export const TitleDetails = () => {
         []
     )
 
+    useEffect(
+        () => {
+            fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}`)
+                .then(res => res.json())
+                .then((data) => {
+                    setWatchlistTitles(data)
+                    data.map(
+                        (listTitle) => {
+                            if (listTitle.netflix_id === title.netflix_id) {
+                                setShowButton(false)
+                            }
+                        }
+                    )
+                })
+        },
+        [title]
+    )
+
     const clickSaveHandler = (event) => {
         event.preventDefault()
 
@@ -65,6 +87,7 @@ export const TitleDetails = () => {
             netflix_id: title.netflix_id,
             img: title.default_image,
             title: title.title,
+            type: title.title_type,
             watchlistId: favorite.watchlistId
         }
 
@@ -85,7 +108,7 @@ export const TitleDetails = () => {
         <>
             <div className="detailsContainer">
                 <article className="detailsCard">
-                    <h2 className="detailsName">{title.title}</h2>
+                    <h2 className="detailsName">{parser.parseFromString('<!doctype html><body>' + title.title, 'text/html').body.textContent }</h2>
                     <img
                         src={
                             title.large_image
@@ -106,40 +129,48 @@ export const TitleDetails = () => {
                         </li>
                     </ul>
                     <section className="detailsSynopsis">
-                        {title.synopsis}
+                        {parser.parseFromString('<!doctype html><body>' + title.synopsis, 'text/html').body.textContent }
                     </section>
-                    <div className="showSaveForm">
-                        <button className="showFormButton"
-                            onClick={() => {
-                                if (!showSaveForm) {
-                                    setShowSaveForm(true)
-                                } else {
-                                    setShowSaveForm(false)
-                                }
-                            }
-                            }>Save to Watchlist</button>
-                    </div>
                     {
-                        showSaveForm
+                        showButton
                             ?
-                            <div className="favoriteDropdown">
-                                <select className="favoriteType"
-                                    onChange={(event) => {
-                                        const copy = { ...favorite }
-                                        copy.watchlistId = event.target.value
-                                        setFavorite(copy)
-                                    }}>
-                                    <option value={0}>Select a Watchlist</option>
-                                    {
-                                        watchlistTypes.map(
-                                            (type) => {
-                                                return <option key={type.id} value={type.id}>{type.name}</option>
+                            <div className="buttonContainer">
+                                <div className="showSaveForm">
+                                    <button className="showFormButton"
+                                        onClick={() => {
+                                            if (!showSaveForm) {
+                                                setShowSaveForm(true)
+                                            } else {
+                                                setShowSaveForm(false)
                                             }
-                                        )
-                                    }
-                                </select>
-                                <button className="saveFavoriteButton"
-                                    onClick={(click) => clickSaveHandler(click)}>Confirm</button>
+                                        }
+                                        }>Save to Watchlist</button>
+                                </div>
+                                {
+                                    showSaveForm
+                                        ?
+                                        <div className="favoriteDropdown">
+                                            <select className="favoriteType"
+                                                onChange={(event) => {
+                                                    const copy = { ...favorite }
+                                                    copy.watchlistId = event.target.value
+                                                    setFavorite(copy)
+                                                }}>
+                                                <option value={0}>Select a Watchlist</option>
+                                                {
+                                                    watchlistTypes.map(
+                                                        (type) => {
+                                                            return <option key={type.id} value={type.id}>{type.name}</option>
+                                                        }
+                                                    )
+                                                }
+                                            </select>
+                                            <button className="saveFavoriteButton"
+                                                onClick={(click) => clickSaveHandler(click)}>Confirm</button>
+                                        </div>
+                                        :
+                                        ""
+                                }
                             </div>
                             :
                             ""

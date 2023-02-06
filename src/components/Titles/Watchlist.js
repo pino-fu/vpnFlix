@@ -9,6 +9,7 @@ export const Watchlist = () => {
 
     const navigate = useNavigate()
 
+    const [selector, setSelector] = useState("0")
     const [watchlistTitles, setWatchlistTitles] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [state, setState] = useState(false)
@@ -42,6 +43,39 @@ export const Watchlist = () => {
 
     useEffect(
         () => {
+            if (selector === "0") {
+                console.log("Viewing All")
+
+                fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}`)
+                .then(res => res.json())
+                .then((data) => {
+                    setWatchlistTitles(data)
+                })
+
+            } else if (selector === "1") {
+                console.log("Viewing Movies")
+
+                fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}&type=movie`)
+                .then(res => res.json())
+                .then((data) => {
+                    setWatchlistTitles(data)
+                })
+
+            } else if (selector === "2") {
+                console.log("Viewing Series")
+
+                fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}&type=series`)
+                .then(res => res.json())
+                .then((data) => {
+                    setWatchlistTitles(data)
+                })
+            }
+        },
+        [selector]
+    )
+
+    useEffect(
+        () => {
             fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}`)
                 .then(res => res.json())
                 .then((data) => {
@@ -52,6 +86,23 @@ export const Watchlist = () => {
     )
 
     return (<>
+        <article className="titleDropdown">
+            <select onChange={(event) => setSelector(event.target.value)} id="titleType">
+                <option className="option">Select a Filter</option>
+                <option
+                    value={0}>
+                    All
+                </option>
+                <option
+                    value={1}>
+                    Movies
+                </option>
+                <option
+                    value={2}>
+                    Series
+                </option>
+            </select>
+        </article>
         <div className="watchlistContainer">
             <article className="watchlistRow">
                 <h2>VPN Needed</h2>
