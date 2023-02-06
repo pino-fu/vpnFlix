@@ -33,6 +33,12 @@
     margin-top: 35px;
 }
 
+.netflixButton {
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
+    margin-top: 35px;
+}
+
 .favoriteDropdown {
     margin-top: 28px;
 }
