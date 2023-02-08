@@ -47,28 +47,28 @@ export const Watchlist = () => {
                 console.log("Viewing All")
 
                 fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}`)
-                .then(res => res.json())
-                .then((data) => {
-                    setWatchlistTitles(data)
-                })
+                    .then(res => res.json())
+                    .then((data) => {
+                        setWatchlistTitles(data)
+                    })
 
             } else if (selector === "1") {
                 console.log("Viewing Movies")
 
                 fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}&type=movie`)
-                .then(res => res.json())
-                .then((data) => {
-                    setWatchlistTitles(data)
-                })
+                    .then(res => res.json())
+                    .then((data) => {
+                        setWatchlistTitles(data)
+                    })
 
             } else if (selector === "2") {
                 console.log("Viewing Series")
 
                 fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}&type=series`)
-                .then(res => res.json())
-                .then((data) => {
-                    setWatchlistTitles(data)
-                })
+                    .then(res => res.json())
+                    .then((data) => {
+                        setWatchlistTitles(data)
+                    })
             }
         },
         [selector]
@@ -111,13 +111,13 @@ export const Watchlist = () => {
                         (title) => {
                             if (title.watchlist.id === 1) {
                                 return <section className="titleCard"
-                                    key={title.netflix_id}
-                                    id={title.netflix_id}>
+                                    key={title.netflixid}
+                                    id={title.netflixid}>
                                     <img
                                         src={title.img}
                                         className="titleImage"
                                         alt="titleCardImage"
-                                        onClick={() => navigate(`../details/${title.netflix_id}`)}
+                                        onClick={() => navigate(`../details/${title.netflixid}`)}
                                     />
                                     <div className="buttonPanel">
                                         <button className="deleteButton"
@@ -134,7 +134,7 @@ export const Watchlist = () => {
                                                     })
                                             }}>Delete</button>
                                         <button className="editButton"
-                                            onClick={() => navigate(`../edit/${title.netflix_id}`)}
+                                            onClick={() => navigate(`../edit/${title.netflixid}`)}
                                         >Edit</button>
                                     </div>
                                     <div className="editPanel">
@@ -173,13 +173,13 @@ export const Watchlist = () => {
                         (title) => {
                             if (title.watchlist.id === 2) {
                                 return <section className="titleCard"
-                                    key={title.netflix_id}
-                                    id={title.netflix_id}>
+                                    key={title.netflixid}
+                                    id={title.netflixid}>
                                     <img
                                         src={title.img}
                                         className="titleImage"
                                         alt="titleCardImage"
-                                        onClick={() => navigate(`../details/${title.netflix_id}`)}
+                                        onClick={() => navigate(`../details/${title.netflixid}`)}
                                     />
                                     <div className="buttonPanel">
                                         <button className="deleteButton"
@@ -196,7 +196,7 @@ export const Watchlist = () => {
                                                     })
                                             }}>Delete</button>
                                         <button className="editButton"
-                                            onClick={() => navigate(`../edit/${title.netflix_id}`)}
+                                            onClick={() => navigate(`../edit/${title.netflixid}`)}
                                         >Edit</button>
                                     </div>
                                     <div className="editPanel">

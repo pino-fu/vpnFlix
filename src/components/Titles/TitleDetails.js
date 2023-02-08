@@ -22,28 +22,28 @@ export const TitleDetails = () => {
 
     const myHeaders = new Headers();
     myHeaders.append("X-RapidAPI-Key", "692a3bc309msh31d29e11c582aa5p1aa1c6jsn45689d696937");
-    myHeaders.append("X-RapidAPI-Host", "unogs-unogs-v1.p.rapidapi.com");
+    myHeaders.append("X-RapidAPI-Host", "unogsng.p.rapidapi.com");
 
     const requestOptions = {
         method: 'GET',
         headers: myHeaders,
         redirect: 'follow'
-    }
+    };
 
     const parser = new DOMParser();
 
     useEffect(
         () => {
-            fetch(`https://unogs-unogs-v1.p.rapidapi.com/title/details?netflix_id=${titleId}`, requestOptions)
+            fetch(`https://unogsng.p.rapidapi.com/title?netflixid=${titleId}`, requestOptions)
                 .then(response => response.json())
-                .then(data => setTitle(data))
+                .then(data => setTitle(data.results[0]))
         },
         []
     )
 
     useEffect(
         () => {
-            fetch(`https://unogs-unogs-v1.p.rapidapi.com/title/countries?netflix_id=${titleId}`, requestOptions)
+            fetch(`https://unogsng.p.rapidapi.com/titlecountries?netflixid=${titleId}`, requestOptions)
                 .then(response => response.json())
                 .then((data) => setCountries(data.results))
         },
@@ -69,7 +69,7 @@ export const TitleDetails = () => {
                     setWatchlistTitles(data)
                     data.map(
                         (listTitle) => {
-                            if (listTitle.netflix_id === title.netflix_id) {
+                            if (listTitle.netflixid === title.netflixid) {
                                 setShowButton(false)
                             }
                         }
@@ -84,10 +84,10 @@ export const TitleDetails = () => {
 
         const favoriteObjectToSendToAPI = {
             userId: VPNetflixUserObject.id,
-            netflix_id: title.netflix_id,
-            img: title.default_image,
+            netflixid: title.netflixid,
+            img: title.img,
             title: title.title,
-            type: title.title_type,
+            type: title.vtype,
             watchlistId: favorite.watchlistId
         }
 
@@ -108,33 +108,51 @@ export const TitleDetails = () => {
         <>
             <div className="detailsContainer">
                 <article className="detailsCard">
-                    <h2 className="detailsName">{parser.parseFromString('<!doctype html><body>' + title.title, 'text/html').body.textContent }</h2>
+                    <h2 className="detailsName">{parser.parseFromString('<!doctype html><body>' + title.title, 'text/html').body.textContent}</h2>
                     <img
                         src={
-                            title.large_image
+                            title.lgimg
                                 ?
-                                title.large_image
+                                title.lgimg
                                 :
-                                title.default_image
+                                title.img
                         }
                         className="detailsImage"
                         alt="detailsCardImage"
                     />
                     <ul className="detailsList">
                         <li className="detailsListItem">
-                            Year: {title.year}
+                            IMDb Rating: {title.imdbrating}
                         </li>
                         <li className="detailsListItem">
-                            Rating: {title.maturity_label}
+                            Video Type: {title.vtype}
                         </li>
+                        <li className="detailsListItem">
+                            Genre: {title.imdbgenre}
+                        </li>
+                        <li className="detailsListItem">
+                            Rating: {title.matlabel}
+                        </li>
+                        <li className="detailsListItem">
+                            Year: {title.year}
+                        </li>
+                        {
+                            title.imdbruntime !== "0"
+                                ?
+                                <li className="detailsListItem">
+                                    Length: {title.imdbruntime}
+                                </li>
+                                :
+                                ""
+                        }
                     </ul>
                     <section className="detailsSynopsis">
-                        {parser.parseFromString('<!doctype html><body>' + title.synopsis, 'text/html').body.textContent }
+                        {parser.parseFromString('<!doctype html><body>' + title.synopsis, 'text/html').body.textContent}
                     </section>
                     <button className="netflixButton"
-                                                onClick={() => {
-                                                    window.open(`https://www.netflix.com/title/${title.netflix_id}`)
-                                                } }>View on Netflix</button>
+                        onClick={() => {
+                            window.open(`https://www.netflix.com/title/${title.netflixid}`)
+                        }}>View on Netflix</button>
                     {
                         showButton
                             ?
@@ -190,7 +208,7 @@ export const TitleDetails = () => {
                                     countries.map(
                                         (country) => {
                                             return <li
-                                                key={country.country_code}>
+                                                key={country.cc}>
                                                 {country.country}
                                             </li>
                                         }

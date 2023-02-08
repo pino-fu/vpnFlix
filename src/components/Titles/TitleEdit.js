@@ -24,7 +24,7 @@ export const TitleEdit = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/favorites?netflix_id=${titleId}`, requestOptions)
+            fetch(`http://localhost:8088/favorites?netflixid=${titleId}`, requestOptions)
                 .then(response => response.json())
                 .then(data => setTitle(data[0]))
         },
@@ -47,7 +47,8 @@ export const TitleEdit = () => {
 
         const favoriteObjectToSendToAPI = {
             userId: title.userId,
-            netflix_id: title.netflix_id,
+            netflixid: title.netflixid,
+            type: title.type,
             img: title.img,
             title: title.title,
             watchlistId: favorite.watchlistId

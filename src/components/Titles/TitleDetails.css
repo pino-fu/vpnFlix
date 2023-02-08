@@ -1,57 +1,58 @@
 .detailsContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 140px; 
 }
 
 .detailsCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .detailsImage {
-    border-radius: 5px;
-    box-shadow: 2px 2px 3px rgb(69, 28, 121), -2px -2px 3px rgb(69, 28, 121);
-    margin: 8px 0px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px rgb(69, 28, 121), -2px -2px 3px rgb(69, 28, 121);
+  margin: 8px 0px;
 }
 
 .detailsListItem {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .detailsSynopsis {
-    max-width: 50%;
-    /*border: .5px solid rgb(244, 238, 238, .5);
+  max-width: 50%;
+  /*border: .5px solid rgb(244, 238, 238, .5);
     border-radius: 10px;
     padding: 9px 6px;*/
 }
 
 .showFormButton {
-    border-radius: 10px;
-    box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
-    margin-top: 35px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
+  margin-top: 35px;
 }
 
 .netflixButton {
-    border-radius: 10px;
-    box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
-    margin-top: 35px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
+  margin-top: 35px;
 }
 
 .favoriteDropdown {
-    margin-top: 28px;
+  margin-top: 28px;
 }
 
 .favoriteType {
-    background-color: black;
-    border-radius: 5px;
-    padding: 1px 1px;
+  background-color: black;
+  border-radius: 5px;
+  padding: 1px 1px;
 }
 
 .saveFavoriteButton {
-    margin-left: 18px;
-    border-radius: 10px;
-    box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
-    margin-top: 10px; 
+  margin-left: 18px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
+  margin-top: 10px;
 }
