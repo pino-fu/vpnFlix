@@ -7,22 +7,23 @@ export const TitleList = () => {
     const [selector, setSelector] = useState("0")
 
     const navigate = useNavigate()
-    
-    const queryLimit = 50
+
+    const queryLimit = 100
 
     const myHeaders = new Headers();
     myHeaders.append("X-RapidAPI-Key", "692a3bc309msh31d29e11c582aa5p1aa1c6jsn45689d696937");
-    myHeaders.append("X-RapidAPI-Host", "unogs-unogs-v1.p.rapidapi.com");
+    myHeaders.append("X-RapidAPI-Host", "unogsng.p.rapidapi.com");
 
     const requestOptions = {
         method: 'GET',
         headers: myHeaders,
         redirect: 'follow'
-    }
+    };
 
     useEffect(
         () => {
-            fetch(`https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=${queryLimit}&order_by=rating_asc`, requestOptions)
+
+            fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&end_year=2023`, requestOptions)
                 .then(response => response.json())
                 .then((data) => {
                     setTitles(data.results)
@@ -36,7 +37,7 @@ export const TitleList = () => {
             if (selector === "0") {
                 console.log("Viewing All")
 
-                fetch(`https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=${queryLimit}&order_by=rating_asc`, requestOptions)
+                fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&end_year=2023`, requestOptions)
                     .then(response => response.json())
                     .then((data) => {
                         setTitles(data.results)
@@ -45,7 +46,7 @@ export const TitleList = () => {
             } else if (selector === "1") {
                 console.log("Viewing Movies")
 
-                fetch(`https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=${queryLimit}&type=movie&order_by=rating_asc`, requestOptions)
+                fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&end_year=2023&type=movie`, requestOptions)
                     .then(response => response.json())
                     .then((data) => {
                         setTitles(data.results)
@@ -54,7 +55,7 @@ export const TitleList = () => {
             } else if (selector === "2") {
                 console.log("Viewing Series")
 
-                fetch(`https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=${queryLimit}&type=series&order_by=rating_asc`, requestOptions)
+                fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&end_year=2023&type=series`, requestOptions)
                     .then(response => response.json())
                     .then((data) => {
                         setTitles(data.results)
@@ -87,10 +88,10 @@ export const TitleList = () => {
                 titles.map(
                     (title) => {
                         return <section className="titleCard"
-                                        key={title.netflix_id}
-                                        id={title.netflix_id}
-                                        onClick={() => navigate(`details/${title.netflix_id}`)}
-                                        >
+                            key={title.nfid}
+                            id={title.nfid}
+                            onClick={() => navigate(`details/${title.nfid}`)}
+                        >
                             <img
                                 src={title.img}
                                 className="titleImage"
