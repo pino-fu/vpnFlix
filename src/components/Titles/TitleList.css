@@ -23,3 +23,25 @@
 .option {
     padding: 3px 2px;
 }
+
+.formContainer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.searchInput {
+    margin-right: 20px;
+}
+
+.searchBar {
+    background-color: black;
+}
+
+#titleExclude {
+    background-color: black;
+}
+
+.titleDropdown {
+    margin-right: 15px
+}

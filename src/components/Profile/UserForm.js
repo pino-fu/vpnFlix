@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 export const UserForm = () => {
@@ -8,12 +8,33 @@ export const UserForm = () => {
 
     const navigate = useNavigate()
 
+    const [countries, setCountries] = useState([])
     const [user, setUser] = useState({
         name: "",
         userName: "",
         email: `${VPNetflixUserObject.email}`,
-        isStaff: false
+        isStaff: false,
+        country: ""
     })
+
+    const myHeaders = new Headers();
+    myHeaders.append("X-RapidAPI-Key", "692a3bc309msh31d29e11c582aa5p1aa1c6jsn45689d696937");
+    myHeaders.append("X-RapidAPI-Host", "unogsng.p.rapidapi.com");
+
+    const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    useEffect(
+        () => {
+            fetch("https://unogsng.p.rapidapi.com/countries", requestOptions)
+                .then(response => response.json())
+                .then(data => setCountries(data.results))
+        },
+        []
+    )
 
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
@@ -67,6 +88,23 @@ export const UserForm = () => {
                         } />
                 </div>
             </fieldset>
+            <fieldset>
+                    <select className="userCountry"
+                        onChange={(event) => {
+                            const copy = { ...user }
+                            copy.country = event.target.value
+                            setUser(copy)
+                        }}>
+                        <option value={0}>Select Home Country</option>
+                        {
+                            countries.map(
+                                (country) => {
+                                    return <option key={country.id} value={country.countrycode}>{country.country}</option>
+                                }
+                            )
+                        }
+                    </select>
+                </fieldset>
             <button
                 onClick={(click) => handleSaveButtonClick(click)}
                 className="btn btn-primary">

@@ -4,7 +4,14 @@ import "./TitleList.css"
 
 export const TitleList = () => {
     const [titles, setTitles] = useState([])
-    const [selector, setSelector] = useState("0")
+    const [exclude, setExclude] = useState(0)
+    const [searchTerms, setSearchTerms] = useState({
+        query: "",
+        type: ""
+    })
+
+    const localVPNetflixUser = localStorage.getItem("vpNetflix_user")
+    const VPNetflixUserObject = JSON.parse(localVPNetflixUser)
 
     const navigate = useNavigate()
 
@@ -23,7 +30,7 @@ export const TitleList = () => {
     useEffect(
         () => {
 
-            fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&end_year=2023`, requestOptions)
+            fetch(`https://unogsng.p.rapidapi.com/search?orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0`, requestOptions)
                 .then(response => response.json())
                 .then((data) => {
                     setTitles(data.results)
@@ -34,55 +41,74 @@ export const TitleList = () => {
 
     useEffect(
         () => {
-            if (selector === "0") {
-                console.log("Viewing All")
 
-                fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&end_year=2023`, requestOptions)
-                    .then(response => response.json())
-                    .then((data) => {
+            fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&&query=${searchTerms.query}&type=${searchTerms.type}&countrylist=`, requestOptions)
+                .then(response => response.json())
+                .then((data) => {
+                    if (exclude) {
+                        const filtered = data.results.filter(title => !title.clist.includes(VPNetflixUserObject.country))
+                        setTitles(filtered)
+                    } else {
                         setTitles(data.results)
-                    })
-
-            } else if (selector === "1") {
-                console.log("Viewing Movies")
-
-                fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&end_year=2023&type=movie`, requestOptions)
-                    .then(response => response.json())
-                    .then((data) => {
-                        setTitles(data.results)
-                    })
-
-            } else if (selector === "2") {
-                console.log("Viewing Series")
-
-                fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&end_year=2023&type=series`, requestOptions)
-                    .then(response => response.json())
-                    .then((data) => {
-                        setTitles(data.results)
-                    })
-            }
+                    }
+                })
         },
-        [selector]
+        [searchTerms, exclude]
     )
 
     return (<>
-        <article className="titleDropdown">
-            <select onChange={(event) => setSelector(event.target.value)} id="titleType">
-                <option className="option">Select a Filter</option>
-                <option
-                    value={0}>
-                    All
-                </option>
-                <option
-                    value={1}>
-                    Movies
-                </option>
-                <option
-                    value={2}>
-                    Series
-                </option>
-            </select>
-        </article>
+        <div className="formContainer">
+            <article className="searchInput">
+                <input className="searchBar"
+                    onChange={
+                        (changeEvent) => {
+                            const copy = { ...searchTerms }
+                            copy.query = changeEvent.target.value
+                            setSearchTerms(copy)
+                        }
+                    }
+                    type="text" placeholder="Search the Globe" />
+            </article>
+            <article className="titleDropdown">
+                <select onChange={(event) => {
+                    const copy = { ...searchTerms }
+                    copy.type = event.target.value
+                    setSearchTerms(copy)
+                }
+                }
+                    id="titleType">
+                    <option className="option" value={""}>Filter by Type</option>
+                    <option
+                        value={""}>
+                        All
+                    </option>
+                    <option
+                        value={"movie"}>
+                        Movies
+                    </option>
+                    <option
+                        value={"series"}>
+                        Series
+                    </option>
+                </select>
+            </article>
+            <article className="titleDropdown">
+                <select onChange={(event) => {
+                    setExclude(parseInt(event.target.value))
+                }}
+                    id="titleExclude">
+                    <option className="option" value={0}>Exclude {VPNetflixUserObject.country}</option>
+                    <option
+                        value={0}>
+                        Off
+                    </option>
+                    <option
+                        value={1}>
+                        On
+                    </option>
+                </select>
+            </article>
+        </div>
         <article className="titleCardContainer">
             {
                 titles.map(

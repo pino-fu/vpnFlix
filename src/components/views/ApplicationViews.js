@@ -10,7 +10,6 @@ export const ApplicationViews = () => {
 		<Routes>
 			<Route path="/" element={
 				<>
-					<h1>VPNetflix</h1>
 					<Outlet />
 				</>
 			}>
