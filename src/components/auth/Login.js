@@ -20,7 +20,8 @@ export const Login = () => {
                         staff: user.isStaff,
                         email: user.email,
                         name: user.name,
-                        userName: user.userName
+                        userName: user.userName,
+                        country: user.country
                     }))
 
                     navigate("/")

@@ -1,15 +1,37 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Login.css"
 
 export const Register = (props) => {
-    const [customer, setCustomer] = useState({
+
+    const [countries, setCountries] = useState([])
+    const [user, setUser] = useState({
         email: "",
         name: "",
         userName: "",
+        country: "",
         isStaff: false
     })
     let navigate = useNavigate()
+
+    const myHeaders = new Headers();
+    myHeaders.append("X-RapidAPI-Key", "692a3bc309msh31d29e11c582aa5p1aa1c6jsn45689d696937");
+    myHeaders.append("X-RapidAPI-Host", "unogsng.p.rapidapi.com");
+
+    const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    useEffect(
+        () => {
+            fetch("https://unogsng.p.rapidapi.com/countries", requestOptions)
+                .then(response => response.json())
+                .then(data => setCountries(data.results))
+        },
+        []
+    )
 
     const registerNewUser = () => {
         return fetch("http://localhost:8088/users", {
@@ -17,7 +39,7 @@ export const Register = (props) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(customer)
+            body: JSON.stringify(user)
         })
             .then(res => res.json())
             .then(createdUser => {
@@ -27,7 +49,8 @@ export const Register = (props) => {
                         staff: createdUser.isStaff,
                         email: createdUser.email,
                         name: createdUser.name,
-                        userName: createdUser.userName
+                        userName: createdUser.userName,
+                        country: createdUser.country
                     }))
                     navigate("/")
                 }
@@ -35,7 +58,7 @@ export const Register = (props) => {
     }
     const handleRegister = (e) => {
         e.preventDefault()
-        return fetch(`http://localhost:8088/users?email=${customer.email}`)
+        return fetch(`http://localhost:8088/users?email=${user.email}`)
             .then(res => res.json())
             .then(response => {
                 if (response.length > 0) {
@@ -49,9 +72,9 @@ export const Register = (props) => {
             })
     }
     const updateCustomer = (evt) => {
-        const copy = { ...customer }
+        const copy = { ...user }
         copy[evt.target.id] = evt.target.value
-        setCustomer(copy)
+        setUser(copy)
     }
     return (
         <main style={{ textAlign: "center" }}>
@@ -74,6 +97,23 @@ export const Register = (props) => {
                     <input onChange={updateCustomer}
                         type="userName" id="userName" className="form-control"
                         placeholder="Username" required />
+                </fieldset>
+                <fieldset>
+                    <select className="userCountry"
+                        onChange={(event) => {
+                            const copy = { ...user }
+                            copy.country = event.target.value
+                            setUser(copy)
+                        }}>
+                        <option value={0}>Select Home Country</option>
+                        {
+                            countries.map(
+                                (country) => {
+                                    return <option key={country.id} value={country.countrycode}>{country.country}</option>
+                                }
+                            )
+                        }
+                    </select>
                 </fieldset>
                 <fieldset>
                     <button type="submit"> Register </button>

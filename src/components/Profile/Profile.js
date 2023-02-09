@@ -15,6 +15,7 @@ export const Profile = () => {
       <h3>Name: {VPNetflixUserObject.name}</h3>
       <h3>Username: {VPNetflixUserObject.userName}</h3>
       <h3>Email: {VPNetflixUserObject.email}</h3>
+      <h3>Home Country: {VPNetflixUserObject.country}</h3>
       <button onClick={() => {
         if (!showForm) {
           setShowForm(true) 
