@@ -36,10 +36,9 @@ export const Login = () => {
         <main className="container--login">
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1>VPNetflix</h1>
-                    <h2>Please sign in</h2>
+                    <h1 className="title">vpnFlix</h1>
                     <fieldset>
-                        <label htmlFor="inputEmail"> Email address </label>
+                        <label htmlFor="inputEmail">email:</label>
                         <input type="email"
                             value={email}
                             onChange={evt => set(evt.target.value)}
@@ -52,10 +51,8 @@ export const Login = () => {
                             Sign in
                         </button>
                     </fieldset>
+                <Link className="registerLink" to="/register">Not a member yet?</Link>
                 </form>
-            </section>
-            <section className="link--register">
-                <Link to="/register">Not a member yet?</Link>
             </section>
         </main>
     )

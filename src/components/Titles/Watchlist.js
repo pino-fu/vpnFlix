@@ -132,10 +132,10 @@ export const Watchlist = () => {
                                                             :
                                                             setState(true)
                                                     })
-                                            }}>Delete</button>
+                                            }}>🗑️</button>
                                         <button className="editButton"
                                             onClick={() => navigate(`../edit/${title.netflixid}`)}
-                                        >Edit</button>
+                                        >✎</button>
                                     </div>
                                     <div className="editPanel">
                                         {
@@ -194,10 +194,10 @@ export const Watchlist = () => {
                                                             :
                                                             setState(true)
                                                     })
-                                            }}>Delete</button>
+                                            }}>🗑️</button>
                                         <button className="editButton"
                                             onClick={() => navigate(`../edit/${title.netflixid}`)}
-                                        >Edit</button>
+                                        >✎</button>
                                     </div>
                                     <div className="editPanel">
                                         {

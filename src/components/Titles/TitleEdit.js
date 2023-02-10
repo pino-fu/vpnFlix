@@ -93,7 +93,7 @@ export const TitleEdit = () => {
                         }
                     </select>
                     <button className="saveFavoriteButton"
-                        onClick={(click) => clickSaveHandler(click)}>Confirm</button>
+                        onClick={(click) => clickSaveHandler(click)}>☑️</button>
                 </div>
                 </article>
         </>

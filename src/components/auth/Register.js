@@ -79,7 +79,7 @@ export const Register = (props) => {
     return (
         <main style={{ textAlign: "center" }}>
             <form className="form--login" onSubmit={handleRegister}>
-                <h1 className="h3 mb-3 font-weight-normal">Create a VPNetflix account</h1>
+                <h1 className="h3 mb-3 font-weight-normal">create a <span>vpnFlix</span> account</h1>
                 <fieldset>
                     <label htmlFor="name"> Full Name </label>
                     <input onChange={updateCustomer}
