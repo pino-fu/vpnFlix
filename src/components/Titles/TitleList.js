@@ -15,7 +15,9 @@ export const TitleList = () => {
 
     const navigate = useNavigate()
 
-    const queryLimit = 100
+    const parser = new DOMParser();
+
+    const queryLimit = 10
 
     const myHeaders = new Headers();
     myHeaders.append("X-RapidAPI-Key", "692a3bc309msh31d29e11c582aa5p1aa1c6jsn45689d696937");
@@ -42,7 +44,7 @@ export const TitleList = () => {
     useEffect(
         () => {
 
-            fetch(`https://unogsng.p.rapidapi.com/search?start_year=1972&orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&&query=${searchTerms.query}&type=${searchTerms.type}&countrylist=`, requestOptions)
+            fetch(`https://unogsng.p.rapidapi.com/search?orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&&query=${searchTerms.query}&type=${searchTerms.type}&countrylist=`, requestOptions)
                 .then(response => response.json())
                 .then((data) => {
                     if (exclude) {
@@ -97,33 +99,40 @@ export const TitleList = () => {
                     setExclude(parseInt(event.target.value))
                 }}
                     id="titleExclude">
-                    <option className="option" value={0}>Exclude {VPNetflixUserObject.country}</option>
-                    <option
-                        value={0}>
-                        Off
-                    </option>
-                    <option
-                        value={1}>
-                        On
-                    </option>
+                    <option className="option" value={0}>Including {VPNetflixUserObject.country}</option>
+                    <option className="option" value={1}>Excluding {VPNetflixUserObject.country}</option>
                 </select>
+            </article>
+            <article className="titleDropdown">
+                <h4>Showing {titles.length} results</h4>
             </article>
         </div>
         <article className="titleCardContainer">
             {
                 titles.map(
                     (title) => {
-                        return <section className="titleCard"
-                            key={title.nfid}
-                            id={title.nfid}
-                            onClick={() => navigate(`details/${title.nfid}`)}
-                        >
-                            <img
-                                src={title.img}
-                                className="titleImage"
-                                alt="titleCardImage"
-                            />
-                        </section>
+                        return <>
+                            <section className="titleCard"
+                                key={title.nfid}
+                                id={title.nfid}
+                                onClick={() => navigate(`details/${title.nfid}`)}>
+                                <img
+                                    src={title.img}
+                                    className="titleImage"
+                                    alt="titleCardImage"
+                                />
+                                <div className="overlay"
+                                    key={title.nfid}>
+                                    <div className="overlayContent">
+                                        <ul className="overlayItemContaier">
+                                            {/* <li className="overlayItem">{parser.parseFromString('<!doctype html><body>' + title.title, 'text/html').body.textContent}</li> */}
+                                            <li className="overlayItem">IMDb: {title.imdbrating}</li>
+                                            <li className="overlayItem">Year: {title.year}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+                        </>
                     }
                 )
             }
