@@ -11,6 +11,9 @@ export const TitleDetails = () => {
     const { titleId } = useParams()
 
     const [title, setTitle] = useState({})
+    const [seasons, setSeasons] = useState([])
+    const [seasonSelector, setSeasonSelector] = useState(1)
+    const [seasonDisplay, setSeasonDisplay] = useState([])
     const [countries, setCountries] = useState([])
     const [watchlistTypes, setWatchlistTypes] = useState([])
     const [watchlistTitles, setWatchlistTitles] = useState([])
@@ -63,6 +66,18 @@ export const TitleDetails = () => {
 
     useEffect(
         () => {
+            fetch(`https://unogsng.p.rapidapi.com/episodes?netflixid=${titleId}`, requestOptions)
+                .then(response => response.json())
+                .then((data) => {
+                    setSeasons(data)
+                    setSeasonDisplay(data[0].episodes)
+                })
+        },
+        []
+    )
+
+    useEffect(
+        () => {
             fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}`)
                 .then(res => res.json())
                 .then((data) => {
@@ -77,6 +92,19 @@ export const TitleDetails = () => {
                 })
         },
         [title]
+    )
+
+    useEffect(
+        () => {
+            seasons.map(
+                (season) => {
+                    if (seasonSelector === season.season) {
+                        setSeasonDisplay(season.episodes)
+                    }
+                }
+            )
+        },
+        [seasonSelector]
     )
 
     const clickSaveHandler = (event) => {
@@ -108,7 +136,7 @@ export const TitleDetails = () => {
         <>
             <div className="detailsContainer">
                 <article className="detailsCard">
-                    <h2 className="detailsName">{parser.parseFromString('<!doctype html><body>' + title.title, 'text/html').body.textContent}</h2>
+                    <h1 className="detailsName">{parser.parseFromString('<!doctype html><body>' + title.title, 'text/html').body.textContent}</h1>
                     <img
                         src={
                             title.lgimg
@@ -121,34 +149,36 @@ export const TitleDetails = () => {
                         alt="detailsCardImage"
                     />
                     <ul className="detailsList">
-                        <li className="detailsListItem">
-                            IMDb Rating: {title.imdbrating}
+                        <div className="upperList">
+                            <li className="detailsListItem">
+                                IMDb Rating: {title.imdbrating}
+                            </li>
+                            <li className="detailsListItem">
+                                Video Type: {title.vtype}
+                            </li>
+                            <li className="detailsListItem">
+                                Genre: {title.imdbgenre}
+                            </li>
+                            <li className="detailsListItem">
+                                Rating: {title.matlabel}
+                            </li>
+                            <li className="detailsListItem">
+                                Year: {title.year}
+                            </li>
+                            {
+                                title.imdbruntime !== "0"
+                                    ?
+                                    <li className="detailsListItem">
+                                        Length: {title.imdbruntime}
+                                    </li>
+                                    :
+                                    ""
+                            }
+                        </div>
+                        <li className="detailsListItem" id="synopsisListItem">
+                            {parser.parseFromString('<!doctype html><body>' + title.synopsis, 'text/html').body.textContent}
                         </li>
-                        <li className="detailsListItem">
-                            Video Type: {title.vtype}
-                        </li>
-                        <li className="detailsListItem">
-                            Genre: {title.imdbgenre}
-                        </li>
-                        <li className="detailsListItem">
-                            Rating: {title.matlabel}
-                        </li>
-                        <li className="detailsListItem">
-                            Year: {title.year}
-                        </li>
-                        {
-                            title.imdbruntime !== "0"
-                                ?
-                                <li className="detailsListItem">
-                                    Length: {title.imdbruntime}
-                                </li>
-                                :
-                                ""
-                        }
                     </ul>
-                    <section className="detailsSynopsis">
-                        {parser.parseFromString('<!doctype html><body>' + title.synopsis, 'text/html').body.textContent}
-                    </section>
                     <button className="netflixButton"
                         onClick={() => {
                             window.open(`https://www.netflix.com/title/${title.netflixid}`)
@@ -199,10 +229,58 @@ export const TitleDetails = () => {
                     }
                 </article>
                 {
+                    seasons.length !== 0
+                        ?
+                        <article className="seasonsContainer">
+                            {
+                                seasons.length > 1
+                                    ?
+                                    <h3 className="seasonCount">{seasons.length} Seasons Available</h3>
+                                    :
+                                    <h3 className="seasonCount">{seasons.length} Season Available</h3>
+                            }
+                            <select className="seasonSelector"
+                                onChange={(event) => {
+                                    setSeasonSelector(parseInt(event.target.value))
+                                }}>
+                                {/* <option value={0}>Select to View Details</option> */}
+                                {
+                                    seasons.map(
+                                        (season) => {
+                                            return <option key={season.season} value={season.season}>Season {season.season}</option>
+                                        }
+                                    )
+                                }
+                            </select>
+                            <div className="seasonDisplay">
+                                {
+                                    seasonDisplay.map(
+                                        (episode) => {
+                                            return <section
+                                                className="episodeCard"
+                                                key={episode.epid}
+                                                id={episode.epid}>
+                                                <img
+                                                    className="episodeCardImage"
+                                                    alt="episodeCardImage"
+                                                    src={episode.img}
+                                                />
+                                                <h5 className="episodeCardName">{episode.epnum}. {parser.parseFromString('<!doctype html><body>' + episode.title, 'text/html').body.textContent}</h5>
+                                            </section>
+
+                                        }
+                                    )
+                                }
+                            </div>
+                        </article>
+                        :
+                        ""
+                }
+                {
                     countries !== null
                         ?
                         <article className="countriesCard">
-                            <h3>Available in:</h3>
+                            <h3>Streaming in:</h3>
                             <ul className="contriesList">
                                 {
                                     countries.map(
@@ -218,7 +296,7 @@ export const TitleDetails = () => {
                         </article>
                         :
                         <article>
-                            <h3 className="contriesUnavailable">This title is not currently available</h3>
+                            <h3 className="contriesUnavailable">This title is not currently streaming</h3>
                         </article>
                 }
             </div>

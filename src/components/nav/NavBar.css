@@ -29,6 +29,7 @@
   text-align: center;
   padding: 10px 10px;
   text-decoration: none;
+
 }
 
 .a_item:hover {
@@ -62,10 +63,9 @@
   display: none;
   position: absolute;
   right: 65px;
-  top: 65px;
+  top: 50px;
   width: auto;
-  z-index: 1;
-  
+  z-index: 1; 
 }
 
 .subnav:hover .subnav-content {

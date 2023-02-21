@@ -4,12 +4,14 @@
   justify-content: space-around;
   margin-bottom: 140px; 
   margin-top: 70px;
+  margin-right: 70px;
 }
 
 .detailsCard {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 40px;
 }
 
 .detailsImage {
@@ -18,16 +20,23 @@
   margin: 8px 0px;
 }
 
+.detailsList {
+  flex-grow: 2; 
+  max-width: 50%;
+}
+
+.upperList {
+  text-align: center;
+}
+
 .detailsListItem {
   list-style-type: none;
 }
 
-.detailsSynopsis {
-  max-width: 50%;
-  /*border: .5px solid rgb(244, 238, 238, .5);
-    border-radius: 10px;
-    padding: 9px 6px;*/
+#synopsisListItem {
+  margin-top: 10px;
 }
+
 
 .showFormButton {
   border-radius: 10px;
@@ -56,4 +65,35 @@
   border-radius: 10px;
   box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
   margin-top: 10px;
+}
+
+.episodeCardName {
+  width: 200px;
+}
+
+.seasonDisplay {
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  max-height: 70vh;
+  margin-right: 50px;
+  padding-right: 50px;
+}
+
+.seasonSelector {
+  background-color: black;
+  border-radius: 5px;
+  padding: 1px 1px;
+  margin-top: 15px;
+  width: 150kpx;
+  margin-bottom: 25px;
+}
+
+.episodeCardImage {
+  width: 200px;
+  margin-bottom: -20px;
+}
+
+.episodeCard {
+  margin-bottom: 15px;
 }

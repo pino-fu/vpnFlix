@@ -86,20 +86,19 @@ export const Watchlist = () => {
     )
 
     return (<>
-        <article className="titleDropdown">
+        <article className="typeDropdown">
             <select onChange={(event) => setSelector(event.target.value)} id="titleType">
-                <option className="option">Filter by Type</option>
                 <option
                     value={0}>
-                    All
+                    Show All
                 </option>
                 <option
                     value={1}>
-                    Movies
+                    Show Movies
                 </option>
                 <option
                     value={2}>
-                    Series
+                    Show Series
                 </option>
             </select>
         </article>
