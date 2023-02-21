@@ -108,7 +108,7 @@ export const UserForm = () => {
             <button
                 onClick={(click) => handleSaveButtonClick(click)}
                 className="btn btn-primary">
-                Save Profile
+                Save 
             </button>
         </form>
     )

@@ -18,7 +18,7 @@ export const TitleDetails = () => {
     const [watchlistTypes, setWatchlistTypes] = useState([])
     const [watchlistTitles, setWatchlistTitles] = useState([])
     const [favorite, setFavorite] = useState({
-        watchlistId: 0
+        watchlistId: 1
     })
     const [showButton, setShowButton] = useState(true)
     const [showSaveForm, setShowSaveForm] = useState(false)
@@ -205,10 +205,9 @@ export const TitleDetails = () => {
                                             <select className="favoriteType"
                                                 onChange={(event) => {
                                                     const copy = { ...favorite }
-                                                    copy.watchlistId = event.target.value
+                                                    copy.watchlistId = parseInt(event.target.value)
                                                     setFavorite(copy)
                                                 }}>
-                                                <option value={0}>Select a Watchlist</option>
                                                 {
                                                     watchlistTypes.map(
                                                         (type) => {

@@ -1,5 +1,6 @@
 import { UserForm } from "./UserForm"
 import { useState, useEffect } from "react"
+import "./Profile.css"
 
 export const Profile = () => {
 
@@ -11,25 +12,29 @@ export const Profile = () => {
 
   return (
     <>
-      <h2>User Profile</h2>
-      <h3>Name: {VPNetflixUserObject.name}</h3>
-      <h3>Username: {VPNetflixUserObject.userName}</h3>
-      <h3>Email: {VPNetflixUserObject.email}</h3>
-      <h3>Home Country: {VPNetflixUserObject.country}</h3>
-      <button onClick={() => {
-        if (!showForm) {
-          setShowForm(true) 
-        } else {
-          setShowForm(false)
-        }
-      }}>Edit Profile</button>
-      {
-        showForm
-        ?
-        <UserForm />
-        :
-        ""
-      }
+      <div className="profileContainer">
+        <div className="profileContainerContainer">
+          <h2>User Profile</h2>
+          <h3>Name: {VPNetflixUserObject.name}</h3>
+          <h3>Username: {VPNetflixUserObject.userName}</h3>
+          <h3>Email: {VPNetflixUserObject.email}</h3>
+          <h3>Home Country: {VPNetflixUserObject.country}</h3>
+          <button onClick={() => {
+            if (!showForm) {
+              setShowForm(true)
+            } else {
+              setShowForm(false)
+            }
+          }}>Edit Profile</button>
+          {
+            showForm
+              ?
+              <UserForm />
+              :
+              ""
+          }
+        </div>
+      </div>
     </>
   )
 }

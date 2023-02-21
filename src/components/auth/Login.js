@@ -33,28 +33,30 @@ export const Login = () => {
     }
 
     return (
-        <main className="container--login">
-            <section>
-                <form className="form--login" onSubmit={handleLogin}>
-                    <h1 className="title">vpnFlix</h1>
-                    <fieldset>
-                        <label htmlFor="inputEmail">email:</label>
-                        <input type="email"
-                            value={email}
-                            onChange={evt => set(evt.target.value)}
-                            className="form-control"
-                            placeholder="Email address"
-                            required autoFocus />
-                    </fieldset>
-                    <fieldset>
-                        <button type="submit">
-                            Sign in
-                        </button>
-                    </fieldset>
-                <Link className="registerLink" to="/register">Not a member yet?</Link>
-                </form>
-            </section>
-        </main>
+        <div className="backgroundContainer">
+            <main className="container--login">
+                <section>
+                    <form className="form--login" onSubmit={handleLogin}>
+                        <h1 className="title">vpnFlix</h1>
+                        <fieldset>
+                            <label htmlFor="inputEmail">email:</label>
+                            <input type="email"
+                                value={email}
+                                onChange={evt => set(evt.target.value)}
+                                className="form-control"
+                                placeholder="Email address"
+                                required autoFocus />
+                        </fieldset>
+                        <fieldset>
+                            <button type="submit">
+                                Sign in
+                            </button>
+                        </fieldset>
+                        <Link className="registerLink" to="/register">Not a member yet?</Link>
+                    </form>
+                </section>
+            </main>
+        </div>
     )
 }
 
