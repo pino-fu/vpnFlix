@@ -1,5 +1,8 @@
-.titleDropdown {
+.typeDropdown {
     margin-top: 70px; 
+    margin-right: 50%;
+    margin-left: 50%;
+    margin-bottom: 30px;
 }
 
 .watchlistContainer {
@@ -33,12 +36,12 @@
     margin-left: 18px;
     border-radius: 10px;
     box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
-    margin-top: 10px; 
+    margin-top: 5px; 
 }
 
 .editButton {
     margin-left: 18px;
     border-radius: 10px;
     box-shadow: 1px 1px 3px rgb(69, 28, 121), -1px -1px 3px rgb(69, 28, 121);
-    margin-top: 10px; 
+    margin-top: 5px; 
 }

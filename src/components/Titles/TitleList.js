@@ -7,8 +7,11 @@ export const TitleList = () => {
     const [exclude, setExclude] = useState(0)
     const [searchTerms, setSearchTerms] = useState({
         query: "",
-        type: ""
+        type: "",
+        queryLimit: 50
     })
+    const [offset, setOffset] = useState(0)
+    const [dependancyBoolean, setDependancyBoolean] = useState(false)
 
     const localVPNetflixUser = localStorage.getItem("vpNetflix_user")
     const VPNetflixUserObject = JSON.parse(localVPNetflixUser)
@@ -16,8 +19,6 @@ export const TitleList = () => {
     const navigate = useNavigate()
 
     const parser = new DOMParser();
-
-    const queryLimit = 10
 
     const myHeaders = new Headers();
     myHeaders.append("X-RapidAPI-Key", "692a3bc309msh31d29e11c582aa5p1aa1c6jsn45689d696937");
@@ -32,7 +33,7 @@ export const TitleList = () => {
     useEffect(
         () => {
 
-            fetch(`https://unogsng.p.rapidapi.com/search?orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0`, requestOptions)
+            fetch(`https://unogsng.p.rapidapi.com/search?orderby=rating&limit=${searchTerms.queryLimit}&subtitle=english&audio=english&offset=0`, requestOptions)
                 .then(response => response.json())
                 .then((data) => {
                     setTitles(data.results)
@@ -44,16 +45,47 @@ export const TitleList = () => {
     useEffect(
         () => {
 
-            fetch(`https://unogsng.p.rapidapi.com/search?orderby=rating&limit=${queryLimit}&subtitle=english&audio=english&offset=0&&query=${searchTerms.query}&type=${searchTerms.type}&countrylist=`, requestOptions)
+            setOffset(offset + searchTerms.queryLimit)
+
+            fetch(`https://unogsng.p.rapidapi.com/search?orderby=rating&limit=${searchTerms.queryLimit}&subtitle=english&audio=english&offset=${offset}&type=${searchTerms.type}`, requestOptions)
                 .then(response => response.json())
                 .then((data) => {
-                    if (exclude) {
-                        const filtered = data.results.filter(title => !title.clist.includes(VPNetflixUserObject.country))
-                        setTitles(filtered)
-                    } else {
-                        setTitles(data.results)
-                    }
+                    const copy = [...titles]
+                    data.results.map((result) => copy.push(result))
+                    setTitles(copy)
                 })
+        },
+        [dependancyBoolean]
+    )
+
+    useEffect(
+        () => {
+
+            titles.length === 0
+                ?
+                fetch(`https://unogsng.p.rapidapi.com/search?orderby=rating&limit=${searchTerms.queryLimit}&subtitle=english&audio=english&offset=${searchTerms.queryLimit}&query=${searchTerms.query}&type=${searchTerms.type}&countrylist=`, requestOptions)
+                    .then(response => response.json())
+                    .then((data) => {
+                        if (exclude) {
+                            const filtered = data.results.filter(title => !title.clist.includes(VPNetflixUserObject.country))
+                            setTitles(filtered)
+                        } else {
+                            setTitles(data.results)
+                        }
+                    })
+                    .then(() => setOffset(searchTerms.queryLimit))
+                :
+                fetch(`https://unogsng.p.rapidapi.com/search?orderby=rating&limit=${searchTerms.queryLimit}&subtitle=english&audio=english&offset=0&query=${searchTerms.query}&type=${searchTerms.type}&countrylist=`, requestOptions)
+                    .then(response => response.json())
+                    .then((data) => {
+                        if (exclude) {
+                            const filtered = data.results.filter(title => !title.clist.includes(VPNetflixUserObject.country))
+                            setTitles(filtered)
+                        } else {
+                            setTitles(data.results)
+                        }
+                    })
+                    .then(() => setOffset(searchTerms.queryLimit))
         },
         [searchTerms, exclude]
     )
@@ -72,6 +104,19 @@ export const TitleList = () => {
                     type="text" placeholder="Search the Globe" />
             </article>
             <article className="titleDropdown">
+                <select onChange={
+                    (changeEvent) => {
+                        const copy = { ...searchTerms }
+                        copy.queryLimit = parseInt(changeEvent.target.value)
+                        setSearchTerms(copy)
+                    }
+                }
+                    id="searchMode">
+                    <option className="option" value={50}>Browse Mode</option>
+                    <option className="option" value={10}>Search Mode</option>
+                </select>
+            </article>
+            <article className="titleDropdown">
                 <select onChange={(event) => {
                     const copy = { ...searchTerms }
                     copy.type = event.target.value
@@ -79,19 +124,9 @@ export const TitleList = () => {
                 }
                 }
                     id="titleType">
-                    <option className="option" value={""}>Filter by Type</option>
-                    <option
-                        value={""}>
-                        All
-                    </option>
-                    <option
-                        value={"movie"}>
-                        Movies
-                    </option>
-                    <option
-                        value={"series"}>
-                        Series
-                    </option>
+                    <option className="option" value={""}>Show All</option>
+                    <option className="option" value={"movie"}>Show Movies</option>
+                    <option className="option" value={"series"}>Show Series</option>
                 </select>
             </article>
             <article className="titleDropdown">
@@ -99,8 +134,8 @@ export const TitleList = () => {
                     setExclude(parseInt(event.target.value))
                 }}
                     id="titleExclude">
-                    <option className="option" value={0}>Including {VPNetflixUserObject.country}</option>
-                    <option className="option" value={1}>Excluding {VPNetflixUserObject.country}</option>
+                    <option className="option" value={0}>Include {VPNetflixUserObject.country}</option>
+                    <option className="option" value={1}>Exclude {VPNetflixUserObject.country}</option>
                 </select>
             </article>
             <article className="titleDropdown">
@@ -119,8 +154,7 @@ export const TitleList = () => {
                                 <img
                                     src={title.img}
                                     className="titleImage"
-                                    alt="titleCardImage"
-                                />
+                                    alt="titleCardImage" />
                                 <div className="overlay"
                                     key={title.nfid}>
                                     <div className="overlayContent">
@@ -137,7 +171,23 @@ export const TitleList = () => {
                 )
             }
         </article>
+        {
+            searchTerms.queryLimit === 50 && exclude === 0 && searchTerms.query === ""
+                ?
+                <div className="showMoreButtonContainer">
+                    <button className="showMoreButton"
+                        onClick={() => {
+                            !dependancyBoolean
+                                ?
+                                setDependancyBoolean(true)
+                                :
+                                setDependancyBoolean(false)
+                        }}
+                    >Show More</button>
+                </div>
+                :
+                ""
+        }
     </>
     )
 }
-
