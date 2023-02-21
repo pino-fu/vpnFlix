@@ -9,7 +9,7 @@ export const TitleEdit = () => {
     const [title, setTitle] = useState([{}])
     const [watchlistTypes, setWatchlistTypes] = useState([])
     const [favorite, setFavorite] = useState({
-        watchlistId: 0
+        watchlistId: 1
     })
 
     const myHeaders = new Headers();
@@ -80,10 +80,9 @@ export const TitleEdit = () => {
                     <select className="favoriteType"
                         onChange={(event) => {
                             const copy = { ...favorite }
-                            copy.watchlistId = event.target.value
+                            copy.watchlistId = parseInt(event.target.value)
                             setFavorite(copy)
                         }}>
-                        <option value={0}>Select a Watchlist</option>
                         {
                             watchlistTypes.map(
                                 (type) => {

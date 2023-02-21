@@ -15,7 +15,7 @@ export const Watchlist = () => {
     const [state, setState] = useState(false)
     const [watchlistTypes, setWatchlistTypes] = useState([])
     const [favorite, setFavorite] = useState({
-        watchlistId: 0
+        watchlistId: 1
     })
 
 
@@ -44,7 +44,6 @@ export const Watchlist = () => {
     useEffect(
         () => {
             if (selector === "0") {
-                console.log("Viewing All")
 
                 fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}`)
                     .then(res => res.json())
@@ -53,7 +52,6 @@ export const Watchlist = () => {
                     })
 
             } else if (selector === "1") {
-                console.log("Viewing Movies")
 
                 fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}&type=movie`)
                     .then(res => res.json())
@@ -62,7 +60,6 @@ export const Watchlist = () => {
                     })
 
             } else if (selector === "2") {
-                console.log("Viewing Series")
 
                 fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}&type=series`)
                     .then(res => res.json())
@@ -143,7 +140,7 @@ export const Watchlist = () => {
                                                 <select className="favoriteType"
                                                     onChange={(event) => {
                                                         const copy = { ...favorite }
-                                                        copy.watchlistId = event.target.value
+                                                        copy.watchlistId = parseInt(event.target.value)
                                                         setFavorite(copy)
                                                     }}>
                                                     <option value={0}>Select a Watchlist</option>

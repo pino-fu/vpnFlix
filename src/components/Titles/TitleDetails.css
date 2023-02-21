@@ -68,7 +68,7 @@
 }
 
 .episodeCardName {
-  width: 200px;
+  width: 175px;
 }
 
 .seasonDisplay {
@@ -90,8 +90,11 @@
 }
 
 .episodeCardImage {
-  width: 200px;
-  margin-bottom: -20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgb(69, 28, 121), -2px -2px 5px rgb(69, 28, 121);
+  margin: 8px 0px;
+  width: 175px;
+  margin-bottom: -15px;
 }
 
 .episodeCard {

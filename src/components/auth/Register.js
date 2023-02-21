@@ -77,20 +77,20 @@ export const Register = (props) => {
         setUser(copy)
     }
     return (
-        <main style={{ textAlign: "center" }}>
+        <main className="container--login" style={{ textAlign: "center" }}>
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">create a <span>vpnFlix</span> account</h1>
-                <fieldset>
-                    <label htmlFor="name"> Full Name </label>
-                    <input onChange={updateCustomer}
-                        type="text" id="name" className="form-control"
-                        placeholder="Enter your name" required autoFocus />
-                </fieldset>
                 <fieldset>
                     <label htmlFor="email"> Email address </label>
                     <input onChange={updateCustomer}
                         type="email" id="email" className="form-control"
                         placeholder="Email address" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="name"> Full Name </label>
+                    <input onChange={updateCustomer}
+                        type="text" id="name" className="form-control"
+                        placeholder="Enter your name" required autoFocus />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="userName"> Username </label>
