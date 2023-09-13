@@ -1,5 +1,3 @@
-# Getting Started with Create React App
-
 # vpnFlix
 ## Frontend capstone project | REACT JS
 ### vpnFlix is an application that broadens users' available Netfilx streaming library to a global scope. With this information at hand, users can employ the use of a Virtual Private Network to set their location to a country where their desired title is available for streaming. Features include:
