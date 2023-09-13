@@ -5,4 +5,4 @@
 ### Filter titles by several criteria, including filtering out titles which are available in the home country associated with the users profile
 ### View a list of countries where a title is available for streaming
 ### Save, edit and delete titles to a personal watchlist
-### Direct link to a title’s page on Netflix for quick streaming https://github.com/pino-fu/vpNetflix
+
