@@ -1,8 +1,4 @@
-<div align="center">
 # vpnFlix
-
-_Your Global Netflix Library_
-</div>
 
 ## About
 
@@ -16,4 +12,5 @@ _Your Global Netflix Library_
 - Save, edit and delete titles to a personal watchlist.
 
 ### Check out my demo video! 
+
 https://youtu.be/AdjGLRhUyUQ
