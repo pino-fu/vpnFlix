@@ -5,11 +5,6 @@
 # vpnFlix
 
 _Your Global Netflix Library_
-
-![GitHub top language](https://img.shields.io/github/languages/top/username/repo?style=flat-square)  <!-- Replace 'username' and 'repo' with your GitHub username and repository name respectively -->
-![GitHub issues](https://img.shields.io/github/issues/username/repo?style=flat-square)  <!-- Replace 'username' and 'repo' with your GitHub username and repository name respectively -->
-![GitHub pull requests](https://img.shields.io/github/issues-pr/username/repo?style=flat-square)  <!-- Replace 'username' and 'repo' with your GitHub username and repository name respectively -->
-
 </div>
 
 ## About
@@ -23,14 +18,3 @@ _Your Global Netflix Library_
 - View a list of countries where a title is available for streaming.
 - Save, edit and delete titles to a personal watchlist.
 
-## Getting Started
-
-_Instructions on how to get a copy of the project up and running on your local machine._
-
-## Contributing
-
-_Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests._
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
