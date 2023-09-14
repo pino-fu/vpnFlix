@@ -1,7 +1,4 @@
 <div align="center">
-
-![vpnFlix Logo](path-to-your-logo.png)  <!-- Replace 'path-to-your-logo.png' with the path to your project's logo -->
-
 # vpnFlix
 
 _Your Global Netflix Library_
