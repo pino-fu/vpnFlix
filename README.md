@@ -1,5 +1,4 @@
-# vpnFlix
-
+![Screenshot](vpnFlixHomePageScreenshot.png)
 ## About
 
 **vpnFlix** is a capstone project developed using **React JS**. It allows users to explore the entire global Netflix library of over 16,000 titles. Users can employ a Virtual Private Network (VPN) to set their location to a country where their desired title is available for streaming.
