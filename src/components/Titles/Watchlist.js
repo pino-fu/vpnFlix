@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import "./Watchlist.css"
 
 export const Watchlist = () => {
@@ -17,6 +17,9 @@ export const Watchlist = () => {
     const [favorite, setFavorite] = useState({
         watchlistId: 1
     })
+
+ 
+
 
 
     useEffect(

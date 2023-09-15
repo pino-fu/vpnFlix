@@ -15,7 +15,7 @@ export const Register = (props) => {
     let navigate = useNavigate()
 
     const myHeaders = new Headers();
-    myHeaders.append("X-RapidAPI-Key", "692a3bc309msh31d29e11c582aa5p1aa1c6jsn45689d696937");
+    myHeaders.append("X-RapidAPI-Key", "814b065451msh799ec8d3ff2240ap1684a7jsnc2d335e70579");
     myHeaders.append("X-RapidAPI-Host", "unogsng.p.rapidapi.com");
 
     const requestOptions = {
@@ -81,7 +81,7 @@ export const Register = (props) => {
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">create a <span>vpnFlix</span> account</h1>
                 <fieldset>
-                    <label htmlFor="email"> Email address </label>
+                    <label htmlFor="email"> email </label>
                     <input onChange={updateCustomer}
                         type="email" id="email" className="form-control"
                         placeholder="Email address" required />
