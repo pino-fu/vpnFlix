@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./TitleList.css"
+import "./TitleList.css";
+import { NewtonsCradle } from '@uiball/loaders';
 
 export const TitleList = () => {
     const [titles, setTitles] = useState([])
@@ -89,7 +90,7 @@ export const TitleList = () => {
         },
         [searchTerms, exclude]
     )
-
+    // alter "show more" button to be hidden initially and remain hidden until titles.length > 50
     return (<>
         <div className="formContainer">
             <article className="searchInput">
@@ -144,35 +145,42 @@ export const TitleList = () => {
         </div>
         <article className="titleCardContainer">
             {
-                titles.map(
-                    (title) => {
-                        return <>
-                            <section className="titleCard"
-                                key={title.nfid}
-                                id={title.nfid}
-                                onClick={() => navigate(`details/${title.nfid}`)}>
-                                <img
-                                    src={title.img}
-                                    className="titleImage"
-                                    alt="titleCardImage" />
-                                <div className="overlay"
-                                    key={title.nfid}>
-                                    <div className="overlayContent">
-                                        <ul className="overlayItemContaier">
-                                            {/* <li className="overlayItem">{parser.parseFromString('<!doctype html><body>' + title.title, 'text/html').body.textContent}</li> */}
-                                            <li className="overlayItem">IMDb: {title.imdbrating}</li>
-                                            <li className="overlayItem">Year: {title.year}</li>
-                                        </ul>
+                titles.length === 0
+                    ?
+                    <div className="loadingSpinnerContainer">
+                        <div className="loadingSpinner">
+                        <NewtonsCradle size={70} color="#119EC9" />
+                        </div>
+                    </div>
+                    :
+                    titles.map(
+                        (title) => {
+                            return <>
+                                <section className="titleCard"
+                                    key={title.nfid}
+                                    id={title.nfid}
+                                    onClick={() => navigate(`details/${title.nfid}`)}>
+                                    <img
+                                        src={title.img}
+                                        className="titleImage"
+                                        alt="titleCardImage" />
+                                    <div className="overlay"
+                                        key={title.nfid}>
+                                        <div className="overlayContent">
+                                            <ul className="overlayItemContaier">
+                                                <li className="overlayItem">IMDb: {title.imdbrating}</li>
+                                                <li className="overlayItem">Year: {title.year}</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </section>
-                        </>
-                    }
-                )
-            }
+                                </section>
+                            </>
+                        }
+                    )
+                }
         </article>
         {
-            searchTerms.queryLimit === 50 && exclude === 0 && searchTerms.query === ""
+            searchTerms.queryLimit === 50 && exclude === 0 && searchTerms.query === "" && titles.length >= 50
                 ?
                 <div className="showMoreButtonContainer">
                     <button className="showMoreButton"

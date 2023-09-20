@@ -17,11 +17,7 @@ export const Watchlist = () => {
     const [favorite, setFavorite] = useState({
         watchlistId: 1
     })
-
- 
-
-
-
+    
     useEffect(
         () => {
             fetch(`http://localhost:8088/favorites?_expand=watchlist&userId=${VPNetflixUserObject.id}`)
